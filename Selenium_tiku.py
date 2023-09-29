@@ -1,44 +1,12 @@
-import os
 import random
 import time
-
-import requests
-from lxml import etree
 from docx import Document
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-load_wait_short = 2
-load_wait_middle = 4
-load_wait_long = 6
-
-
-def getChromeBrowser():
-    chrome_options = Options()
-    chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
-    chrome_driver = r"D:\SoftwarePackage\Programming\Python\chromedriver_win32_96_0_4664\chromedriver.exe"
-    browser = webdriver.Chrome(chrome_driver, options=chrome_options)
-    return browser
-
-
-def openBrowserWebsite(url):
-    browser = getChromeBrowser()
-    browser.get(url)
-    browser.implicitly_wait(load_wait_short)
-    print('web title:', end='')
-    print(browser.title)
-
 if __name__ == '__main__':
-    # 右键谷歌浏览器图标，目标后面添加如下，确定，重启浏览器。
-    # --args --disable-web-security --user-data-dir = D:\pycharmprogram\pachong
-    # os.system("cd C:\Program Files\Google\Chrome\Application")
-    # dir_path = os.getcwd()
-    # user-data-dir 如果是其他盘或者c 盘已有的文件，chrome 会报错，无法对其进行读写操作
-    # os.system('C:\Program Files\Google\Chrome\Application>chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\selenum\AutomationProfile"')
-    # --remote --debugging - port值，可以指定任何打开的端口。
-    # --user-data-dir标记，指定创建新Chrome配置文件的目录。它是为了确保在单独的配置文件中启动chrome，不会污染你的默认配置文件。
-
+    # 因为用selenium进行登录会遇到验证码的问题，不会搞，就直接控制已经打开的浏览器，看readme
     chrome_options = Options()
     chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
     driver = webdriver.Chrome(chrome_options)
@@ -48,6 +16,7 @@ if __name__ == '__main__':
         elements = driver.find_elements(By.CLASS_NAME,'quesBox')
         text = elements[0].text
 
+        # 删一些没用的字符
         text = text.replace('答案解析：\n上一题\n下一题', '')
         text = text.replace('隐藏答案', '')
         document.add_paragraph(text)
